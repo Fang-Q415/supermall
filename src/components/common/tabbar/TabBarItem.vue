@@ -1,0 +1,56 @@
+<template>
+  <div class="tab-bar-item" @click="onItemClick">
+    <div v-if="!isActive">
+      <slot name="item-icon"></slot>
+    </div>
+    <div v-else>
+      <slot name="item-icon-active"></slot>
+    </div>
+    <div :style="activeStyle">
+      <slot name="item-text"></slot>
+    </div>
+  </div>
+</template>
+
+<script>
+export default {
+  name: 'TabBarItem',
+  data(){
+    return{
+      // isActive:false
+    }
+  },
+  props: {
+    path:String,
+    activeColor:{
+      type:String,
+      default:'red'
+    }
+  },
+  methods:{
+    onItemClick(){
+      console.log('123')
+      this.$router.replace(this.path) 
+    }
+  },
+  computed:{
+    isActive(){
+      return !this.$route.path.indexOf(this.path)
+    },
+    activeStyle(){
+      return this.isActive ? {color:this.activeColor}:{}
+    }
+  }
+}
+</script>
+
+<style scoped>
+ .tab-bar-item{
+   flex: 1;
+   text-align: center;
+   height: 49px;
+ }
+ .active{
+   color: red;
+ }
+</style>
